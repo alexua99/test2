@@ -5464,16 +5464,34 @@
                 const header = document.createElement('div')
                 header.classList.add('list__header')
 
+                const button = document.createElement('button')
+                button.classList.add('list__button')
+                button.innerHTML = 'Send CV 🚀'
+
                 const main = document.createElement('div')
                 main.classList.add('list__main')
 
 
                 const mainWrap = document.createElement('div')
                 mainWrap.classList.add('list__main-wrap')
-                mainWrap.innerHTML = data.description
+
+
+                const mainDescription = document.createElement('div')
+
+                mainDescription.innerHTML = data.description
+
+                const buttonGroup = document.createElement('div')
+                buttonGroup.classList.add('list__buttons')
+
 
                 const headerRow = document.createElement('div')
                 headerRow.classList.add('list__header-row')
+
+                const link = document.createElement('a')
+                link.classList.add('list__link')
+                link.href = data.link
+                link.target = '_blank'
+
 
                 const title = document.createElement('h4')
                 title.classList.add('list__title')
@@ -5496,6 +5514,8 @@
 
                 headerRow.append(shorttitle, title, subTitle)
 
+                buttonGroup.append(button, link)
+                mainWrap.append(buttonGroup, mainDescription)
                 main.append(mainWrap)
                 header.append(headerRow, img)
 
@@ -5525,8 +5545,13 @@
             background: linear-gradient(180deg, rgb(31, 31, 31) 0%, rgb(20, 20, 20) 100%);
         }
 
+        .list__buttons {
+            padding-bottom: 20px;
+
+        }
+
         .list__main-wrap {
-            padding: 20px 20px 40px;
+            padding: 20px 20px 80px;
         }
 
         .list__main--active {
@@ -5566,6 +5591,36 @@
             line-height: 22.2px;
         }
 
+        .list__link {
+            display: block;
+            width: 90px;
+            height: 36px;
+            background-image: url('./framerusercontent.com/images/zftIrQF192VNMxIIltoAXQOVEM.png');
+            background-size: cover;
+            border: 1px solid rgb(194, 255, 10);
+            border-radius: 20px;
+        }
+
+        .list__button {
+            cursor: pointer;
+            width: fit-content;
+            padding: 0 20px;
+            height: 48px;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            border-top-left-radius: 50px;
+            border-top-right-radius: 50px;
+            font-size: 18px;
+            border-radius: 40px;
+            background-color: rgb(194, 255, 10);
+            transition: background-color 0.4s;
+            font-weight: 600;
+        }
+
+        .list__button:hover {
+            background-color: rgb(174, 215, 10);
+        }
+
         .list__header {
             display: flex;
             align-items: center;
@@ -5589,6 +5644,12 @@
             font-size: 18px;
             color: rgb(120, 120, 120);
             margin-bottom: 12px;
+        }
+
+        .list__buttons {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
     </style>
     <!-- End of headEnd -->
