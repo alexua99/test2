@@ -5437,7 +5437,6 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             const out = document.querySelector('.out')
-
             function addVac() {
                 fetch('https://jobs.dou.ua/companies/honeytech/vacancies/export/')
                     .then(data => data.json())
@@ -5452,7 +5451,6 @@
                 })
 
             }
-
             function createItem(data) {
                 const div = document.createElement('div')
                 div.classList.add('list__item')
@@ -5467,6 +5465,10 @@
                 const button = document.createElement('button')
                 button.classList.add('list__button')
                 button.innerHTML = 'Send CV 🚀'
+                button.addEventListener('click', ()=> {
+                    const modal = document.querySelector('.modal-form')
+                    modal.classList.add('modalForm-visible')
+                })
 
                 const main = document.createElement('div')
                 main.classList.add('list__main')
@@ -5524,7 +5526,135 @@
 
             }
 
+            const modalForm = document.querySelector('.modal-form')
+            const formClose = document.querySelector('.form__close')
+            const form = document.getElementById('contactForm');
+            const nameField = document.getElementById('name');
+            const emailField = document.getElementById('email');
+            const cvField = document.getElementById('cv');
+            const messageField = document.getElementById('message');
+            const inputs = document.querySelectorAll('.form__input-row');
+
+            const nameError = document.getElementById('nameError');
+            const emailError = document.getElementById('emailError');
+            const cvError = document.getElementById('cvError');
+            const messageError = document.getElementById('messageError');
+            const successMessage = document.getElementById('successMessage');
+
+            const maxFileSize = 2 * 1024 * 1024; // 2 MB
+            formClose.addEventListener('click', ()=> {
+                modalForm.classList.remove('modalForm-visible')
+            })
+// Add event listeners to inputs to handle class toggling for active state
+            inputs.forEach(item => {
+                let inp = item.querySelector('input');
+                if (inp) {
+                    inp.addEventListener('change', () => {
+                        if (inp.value) {
+                            item.classList.add('form__input-active');
+                        } else {
+                            item.classList.remove('form__input-active');
+                        }
+                    });
+                }
+
+                // Check textarea as well
+                let textarea = item.querySelector('textarea');
+                if (textarea) {
+                    textarea.addEventListener('input', () => {
+                        if (textarea.value) {
+                            item.classList.add('form__input-active');
+                        } else {
+                            item.classList.remove('form__input-active');
+                        }
+                    });
+                }
+            });
+
+// Handle CV file upload and update label message
+            cvField.addEventListener('change', function() {
+                const cvLabel = document.querySelector('.form__label-cv');
+                const file = cvField.files[0];
+
+                if (file) {
+                    if (file.size <= maxFileSize) {
+                        cvError.textContent = ''; // Reset error
+                        cvLabel.textContent = 'CV Uploaded Successfully'; // Update label text
+                        cvLabel.classList.add('form__input-active'); // Add active class
+                    } else {
+                        cvError.textContent = 'File size must be less than 2 MB.'; // Show error
+                        cvLabel.textContent = 'Send CV'; // Restore label text
+                        cvLabel.classList.remove('form__input-active'); // Remove active class
+                    }
+                } else {
+                    cvLabel.textContent = 'Send CV'; // Restore label text if no file selected
+                    cvLabel.classList.remove('form__input-active');
+                }
+            });
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                let isValid = true;
+
+                // Reset error messages
+                nameError.textContent = '';
+                emailError.textContent = '';
+                cvError.textContent = '';
+                messageError.textContent = '';
+
+                // Validate name
+                if (nameField.value.trim() === '') {
+                    nameError.textContent = 'Please enter your name.';
+                    isValid = false;
+                }
+
+                // Validate email
+                const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                if (!emailRegex.test(emailField.value.trim())) {
+                    emailError.textContent = 'Please enter a valid email address.';
+                    isValid = false;
+                }
+
+                // Validate CV file
+                const file = cvField.files[0];
+                if (!file) {
+                    cvError.textContent = 'Please upload your CV.';
+                    isValid = false;
+                } else if (file.size > maxFileSize) {
+                    cvError.textContent = 'File size must be less than 2 MB.';
+                    isValid = false;
+                }
+
+                // Validate message
+                if (messageField.value.trim() === '') {
+                    messageError.textContent = 'Please enter a message.';
+                    isValid = false;
+                }
+
+                // If everything is valid, show success message and reset form
+                if (isValid) {
+                    successMessage.style.display = 'block';
+                    form.reset();
+                    document.querySelector('.form__label-cv').textContent = 'Send CV'; // Reset label text
+                    document.querySelector('.form__label-cv').classList.remove('form__input-active'); // Reset active class
+                }
+            });
+
+            if(document.querySelectorAll('.btn')){
+                let btn = document.querySelectorAll('.btn')
+                btn.forEach(item => {
+                    item.addEventListener('click', ()=> {
+
+                        const modal1 = document.querySelector('.modal-form')
+                        modal1.classList.add('modalForm-visible')
+                    })
+
+                })
+            }
+
+
         });
+
     </script>
 
     <style>
@@ -5653,14 +5783,183 @@
         }
     </style>
     <!-- End of headEnd -->
+
+
+    <style>
+          .modalForm-visible {
+            visibility: visible !important;
+          }
+        .modal-form {
+          position: fixed;
+          left: 0;
+          top: 0;
+          visibility: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+          z-index: 9999;
+          background: rgb(0 0 0 / 0.8);
+        }
+        .form {
+          --form-wiget-color-white: #fff;
+          --form-wiget-color-black: rgb(13 13 13);
+          --form-wiget-color-success: rgb(104 215 10);
+          --form-wiget-color-button: rgb(194 255 10);
+          --form-wiget-color-success-contrast: rgb(104 215 10);
+          --form-wiget-color-error: rgb(104 215 10);
+
+          --form-wiget-border-radius: 20px;
+
+          padding: 20px;
+          border-radius: var(--form-wiget-border-radius);
+          background: var(--form-wiget-color-white);
+        }
+        .form__wrap {
+          display: flex;
+          width: 100%;
+          min-width: 320px;
+          flex-direction: column;
+          gap: 20px;
+          position: relative;
+        }
+        .form__title {
+          font-size: 28px;
+          font-weight: 800;
+          text-align: center;
+        }
+        .form__success,  .form__error{
+          display: none;
+        }
+
+        .form__input, .form__textarea{
+          width: 100%;
+          border-radius: 20px;
+          padding: 4px 10px;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 21px;
+          border: 1px solid var(--form-input-border-color, var(--form-wiget-color-black));
+          outline: none;
+          min-height: 36px;
+          display: block;
+        }
+        .form__input:hover, .form__textarea:hover{
+          --form-input-border-color: var(--form-wiget-color-success);
+        }
+        .form__input:focus {
+          --form-input-border-color: var(--form-wiget-color-success);
+        }
+        .form__input-active {
+          --form-input-border-color: var(--form-wiget-color-success);
+        }
+        .form__input:focus +  .form__label, .form__input-active .form__label{
+          --form-label-top: 0;
+          font-size: 10px;
+          color: var(--form-wiget-color-success-contrast);
+        }
+        .form__input-row {
+          position: relative;
+        }
+        .form__label {
+          position: absolute;
+          left: 10px;
+          top: var(--form-label-top, 50%);
+          color: rgb(0 0 0 / 0.6);
+          padding: 3px;
+          background: #fff;
+          transform: translatey(-50%);
+          transition: top 0.5s, font-size 0.5s;
+          pointer-events: none;
+        }
+        .form__label-cv {
+          font-size: 14px;
+          line-height: 1.8;
+          color: rgb(0 0 0 / 0.6);
+        }
+        .form__input-cv-hide {
+          display: none;
+        }
+        .form__textarea {
+          resize: none;
+          width: 100%;
+          height: 100px;
+          border-radius: var(--form-wiget-border-radius);
+          padding: 10px 10px;
+        }
+        .form__button {
+          background-color: var(--form-wiget-color-button);
+          border: none;
+          outline: none;
+          font-size: 14px;
+          line-height: 1.8;
+          color:  var(--form-wiget-color-black);
+          border-radius: var(--form-wiget-border-radius);
+          min-height: 36px;
+          cursor: pointer;
+          transition: background-color 0.5s;
+
+        }
+        .form__button:hover {
+          background-color: var(--form-wiget-color-success-contrast);
+        }
+        .form__close {
+          cursor: pointer;
+          width: 20px;
+          position: absolute;
+          right: 0;
+        }
+    </style>
 </head>
 
 <body>
-    <!-- <script async src="http./events.framer.com/script?v=2"
-        data-fid="631ed175780469deae8e4775e960e8aa96bcde0b0f084359e6f912ebb3f194c5" data-no-nt></script> -->
-    <!-- Start of bodyStart -->
+
 
     <!-- End of bodyStart -->
+    <div class="modal-form">
+        <form class="form" id="contactForm" novalidate>
+            <div class="form__wrap">
+                <div class="form__close" >
+                    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+                </div>
+                <h3 class="form__title">Registration</h3>
+
+                <div class="form__input-row">
+                    <input class="form__input" type="text" id="name" required />
+                    <label class="form__label" for="name">Your Name</label>
+                    <div class="form__error" id="nameError">Error</div>
+                </div>
+
+                <div class="form__input-row">
+                    <input class="form__input" type="email" id="email" required />
+                    <label class="form__label" for="email">Email</label>
+                    <div class="form__error" id="emailError"></div>
+                </div>
+
+                <div class="form__input-row">
+                    <input class="form__input-cv-hide" type="file" id="cv" accept=".pdf,.scv,.doc,.docx" required />
+                    <label class="form__input form__label-cv" for="cv">
+                        Send CV
+                    </label>
+                    <div class="error" id="cvError"></div>
+                </div>
+
+                <div class="form__input-row">
+
+                    <textarea class="form__textarea" id="message" rows="5" required placeholder="Your Text Message"></textarea>
+                    <div class="error" id="messageError"></div>
+                </div>
+                <button class="form__button" type="submit">Submit</button>
+                <div class="form__success" id="successMessage">Success</div>
+            </div>
+
+
+        </form>
+    </div>
+
+
+
     <div id="main"
         data-framer-hydrate-v2="{&quot;routeId&quot;:&quot;augiA20Il&quot;,&quot;localeId&quot;:&quot;default&quot;,&quot;breakpoints&quot;:[{&quot;hash&quot;:&quot;72rtr7&quot;,&quot;mediaQuery&quot;:&quot;(min-width: 1400px)&quot;},{&quot;hash&quot;:&quot;lh10ob&quot;,&quot;mediaQuery&quot;:&quot;(max-width: 1399px)&quot;}]}"
         data-framer-ssr-released-at="2025-06-20T15:05:48.718Z" data-framer-page-optimized-at="2025-06-24T15:01:21.830Z"
@@ -5917,18 +6216,18 @@
                                         </a><!--/$--></div>
                                 </div>
                                 <div class="ssr-variant hidden-72rtr7">
-                                    <div class="framer-2iny96-container" id="2iny96"><!--$--><a
-                                            class="framer-gYn4Z framer-l01e1c framer-v-rhwl58 framer-bej433"
+                                    <div class="framer-2iny96-container" id="2iny96"><!--$--><div
+                                            class="btn framer-gYn4Z framer-l01e1c framer-v-rhwl58 framer-bej433"
                                             data-border="true" data-framer-name="Variant 2" data-highlight="true"
                                             style="--border-bottom-width:1px;--border-color:rgb(0, 0, 0);--border-left-width:1px;--border-right-width:1px;--border-style:solid;--border-top-width:1px;background-color:rgb(194, 255, 10);border-bottom-left-radius:100px;border-bottom-right-radius:100px;border-top-left-radius:100px;border-top-right-radius:100px;width:100%"
-                                            href="https://jobs.dou.ua/companies/honeytech/" rel="noopener" tabindex="0">
+                                            tabindex="0">
                                             <div class="framer-ouirzn" data-framer-name="Explore Careers"
                                                 style="outline:none;display:flex;flex-direction:column;justify-content:center;flex-shrink:0;--extracted-r6o4lv:rgb(13, 13, 13);--framer-paragraph-spacing:0px;transform:none"
                                                 data-framer-component-type="RichTextContainer">
                                                 <p style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:20px;--framer-font-weight:500;--framer-line-height:20.8px;--framer-text-color:var(--extracted-r6o4lv, rgb(13, 13, 13))"
                                                     class="framer-text">Відправити своє CV </p>
                                             </div>
-                                        </a><!--/$--></div>
+                                        </div><!--/$--></div>
                                 </div>
                             </div>
                         </div>
@@ -6100,10 +6399,10 @@
                                                 class="framer-text">разом з нами?</p>
                                         </div>
                                         <div class="framer-d5yppq-container"
-                                            style="will-change:transform;opacity:0;transform:none">
+                                            style="will-change:transform;opacity:1;transform:none">
                                             <div class="framer-4lVKC framer-2p943k framer-v-v3k24y"
                                                 data-framer-name="Variant 2"
-                                                style="--border-bottom-width:0px;--border-color:rgba(0, 0, 0, 0);--border-left-width:0px;--border-right-width:0px;--border-style:solid;--border-top-width:0px;background-color:rgb(0, 0, 0);border-bottom-left-radius:20px;border-bottom-right-radius:20px;border-top-left-radius:20px;border-top-right-radius:20px;width:100%;will-change:transform;opacity:0;transform:none"
+                                                style="--border-bottom-width:0px;--border-color:rgba(0, 0, 0, 0);--border-left-width:0px;--border-right-width:0px;--border-style:solid;--border-top-width:0px;background-color:rgb(0, 0, 0);border-bottom-left-radius:20px;border-bottom-right-radius:20px;border-top-left-radius:20px;border-top-right-radius:20px;width:100%;will-change:transform;opacity:1;transform:none"
                                                 tabindex="0">
                                                 <div class="framer-3f6zfy" data-framer-name="Explore Careers"
                                                     style="outline:none;display:flex;flex-direction:column;justify-content:center;flex-shrink:0;--extracted-r6o4lv:rgb(255, 255, 255);--framer-paragraph-spacing:0px;transform:none"
