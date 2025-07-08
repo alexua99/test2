@@ -5445,6 +5445,8 @@
             }
             addVac()
             function listAs(data) {
+                console.log(data);
+
                 data.map(item => {
                     out.append(createItem(item))
                 })
@@ -5454,9 +5456,21 @@
             function createItem(data) {
                 const div = document.createElement('div')
                 div.classList.add('list__item')
+                div.addEventListener('click', () => {
+                    main.classList.toggle('list__main--active')
+                    img.classList.toggle('list__img--active')
+                })
 
                 const header = document.createElement('div')
                 header.classList.add('list__header')
+
+                const main = document.createElement('div')
+                main.classList.add('list__main')
+
+
+                const mainWrap = document.createElement('div')
+                mainWrap.classList.add('list__main-wrap')
+                mainWrap.innerHTML = data.description
 
                 const headerRow = document.createElement('div')
                 headerRow.classList.add('list__header-row')
@@ -5474,6 +5488,7 @@
                 shorttitle.innerHTML = data.category
 
                 const img = document.createElement('img')
+                img.classList.add('list__img')
                 img.src = ' ./framerusercontent.com//images/download.svg'
                 img.alt = 'icon'
                 img.width = '40'
@@ -5481,9 +5496,10 @@
 
                 headerRow.append(shorttitle, title, subTitle)
 
+                main.append(mainWrap)
                 header.append(headerRow, img)
 
-                div.append(header)
+                div.append(header, main)
                 return div
 
             }
@@ -5494,18 +5510,34 @@
     <style>
         .out {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 40px;
             width: 100%;
             max-width: 980px;
             margin: 0 auto;
         }
 
+        .list__main {
+            font-size: 16px;
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.6s linear;
+            background: linear-gradient(180deg, rgb(31, 31, 31) 0%, rgb(20, 20, 20) 100%);
+        }
+
+        .list__main-wrap {
+            padding: 20px 20px 40px;
+        }
+
+        .list__main--active {
+            max-height: 1500px;
+        }
+
+
         .list__item {
             font-size: 22px;
             line-height: 25.2px;
             cursor: pointer;
-            padding: 20px;
             background-color: var(--token-77085c4a-7c60-481b-bb4c-b0e5839e54b1, rgb(22, 22, 22));
             border-bottom-left-radius: 24px;
             border-bottom-right-radius: 24px;
@@ -5518,6 +5550,7 @@
 
             color: rgb(217, 217, 217);
             border: 2px solid transparent;
+            overflow: hidden;
         }
 
         .list__item:hover {
@@ -5537,6 +5570,19 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+        }
+
+        .list__img {
+            transition: transform 0.4s linear;
+            transform: rotate(0);
+        }
+
+        .list__img--active {
+            transform: rotate(-180deg);
+        }
+
+        .list__header {
+            padding: 20px;
         }
 
         .list__short-title {
