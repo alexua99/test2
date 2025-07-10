@@ -42,6 +42,14 @@
     <link rel="alternate" href="https://honeyvideo.framer.website/" hreflang="uk">
     <link rel="alternate" href="https://honeyvideo.framer.website/en/" hreflang="en">
     <link rel="alternate" href="https://honeyvideo.framer.website/" hreflang="x-default">
+
+    <link rel="stylesheet" href="./style/form.css">
+    <link rel="stylesheet" href="./style/header.css">
+
+    <script src="./js/form.js" defer></script>
+    <script src="./js/vacantion-list.js" defer></script>
+    <script src="./js/burger.js"></script>
+
     <style data-framer-breakpoint-css>
         @media(min-width: 1400px) {
             .hidden-72rtr7 {
@@ -5381,10 +5389,16 @@
             top: 6px;
             width: 3px
         }
-        .framer-13n5oqb, .framer-1gg8mxu, .framer-2mh2hf, .framer-1m9z293, .framer-2mh2hf {
-          margin: 0 auto;
-          max-width: 1200px;
+
+        .framer-13n5oqb,
+        .framer-1gg8mxu,
+        .framer-2mh2hf,
+        .framer-1m9z293,
+        .framer-2mh2hf {
+            margin: 0 auto;
+            max-width: 1200px;
         }
+
         .framer-DFb9M .framer-xbqj79 {
             height: 18px;
             left: 0;
@@ -5436,232 +5450,9 @@
             filter: brightness(0) saturate(100%) invert(88%) sepia(69%) saturate(950%) hue-rotate(16deg) brightness(101%) contrast(101%);
         }
     </style><!-- Start of headEnd -->
-    <script>
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const out = document.querySelector('.out')
-            function addVac() {
-                fetch('https://jobs.dou.ua/companies/honeytech/vacancies/export/')
-                    .then(data => data.json())
-                    .then(data => listAs(data));
-            }
-            addVac()
-            function listAs(data) {
-                console.log(data);
-
-                data.map(item => {
-                    out.append(createItem(item))
-                })
-
-            }
-            function createItem(data) {
-                const div = document.createElement('div')
-                div.classList.add('list__item')
-                div.addEventListener('click', () => {
-                    main.classList.toggle('list__main--active')
-                    img.classList.toggle('list__img--active')
-                })
-
-                const header = document.createElement('div')
-                header.classList.add('list__header')
-
-                const button = document.createElement('button')
-                button.classList.add('list__button')
-                button.innerHTML = 'Send CV 🚀'
-                button.addEventListener('click', ()=> {
-                    const modal = document.querySelector('.modal-form')
-                    modal.classList.add('modalForm-visible')
-                })
-
-                const main = document.createElement('div')
-                main.classList.add('list__main')
-
-
-                const mainWrap = document.createElement('div')
-                mainWrap.classList.add('list__main-wrap')
-
-
-                const mainDescription = document.createElement('div')
-
-                mainDescription.innerHTML = data.description
-
-                const buttonGroup = document.createElement('div')
-                buttonGroup.classList.add('list__buttons')
-
-
-                const headerRow = document.createElement('div')
-                headerRow.classList.add('list__header-row')
-
-                const link = document.createElement('a')
-                link.classList.add('list__link')
-                link.href = data.link
-                link.target = '_blank'
-
-
-                const title = document.createElement('h4')
-                title.classList.add('list__title')
-                title.innerHTML = data.title
-
-                const subTitle = document.createElement('p')
-                subTitle.classList.add('list__sub-title')
-                subTitle.innerHTML = data.location
-
-                const shorttitle = document.createElement('p')
-                shorttitle.classList.add('list__short-title')
-                shorttitle.innerHTML = data.category
-
-                const img = document.createElement('img')
-                img.classList.add('list__img')
-                img.src = ' ./framerusercontent.com//images/download.svg'
-                img.alt = 'icon'
-                img.width = '40'
-                img.height = '40'
-
-                headerRow.append(shorttitle, title, subTitle)
-
-                buttonGroup.append(button, link)
-                mainWrap.append(buttonGroup, mainDescription)
-                main.append(mainWrap)
-                header.append(headerRow, img)
-
-                div.append(header, main)
-                return div
-
-            }
-
-            const modalForm = document.querySelector('.modal-form')
-            const formClose = document.querySelector('.form__close')
-            const form = document.getElementById('contactForm');
-            const nameField = document.getElementById('name');
-            const emailField = document.getElementById('email');
-            const cvField = document.getElementById('cv');
-            const messageField = document.getElementById('message');
-            const inputs = document.querySelectorAll('.form__input-row');
-
-            const nameError = document.getElementById('nameError');
-            const emailError = document.getElementById('emailError');
-            const cvError = document.getElementById('cvError');
-            const messageError = document.getElementById('messageError');
-            const successMessage = document.getElementById('successMessage');
-
-            const maxFileSize = 2 * 1024 * 1024; // 2 MB
-            formClose.addEventListener('click', ()=> {
-                modalForm.classList.remove('modalForm-visible')
-            })
-// Add event listeners to inputs to handle class toggling for active state
-            inputs.forEach(item => {
-                let inp = item.querySelector('input');
-                if (inp) {
-                    inp.addEventListener('change', () => {
-                        if (inp.value) {
-                            item.classList.add('form__input-active');
-                        } else {
-                            item.classList.remove('form__input-active');
-                        }
-                    });
-                }
-
-                // Check textarea as well
-                let textarea = item.querySelector('textarea');
-                if (textarea) {
-                    textarea.addEventListener('input', () => {
-                        if (textarea.value) {
-                            item.classList.add('form__input-active');
-                        } else {
-                            item.classList.remove('form__input-active');
-                        }
-                    });
-                }
-            });
-
-// Handle CV file upload and update label message
-            cvField.addEventListener('change', function() {
-                const cvLabel = document.querySelector('.form__label-cv');
-                const file = cvField.files[0];
-
-                if (file) {
-                    if (file.size <= maxFileSize) {
-                        cvError.textContent = ''; // Reset error
-                        cvLabel.textContent = 'CV Uploaded Successfully'; // Update label text
-                        cvLabel.classList.add('form__input-active'); // Add active class
-                    } else {
-                        cvError.textContent = 'File size must be less than 2 MB.'; // Show error
-                        cvLabel.textContent = 'Send CV'; // Restore label text
-                        cvLabel.classList.remove('form__input-active'); // Remove active class
-                    }
-                } else {
-                    cvLabel.textContent = 'Send CV'; // Restore label text if no file selected
-                    cvLabel.classList.remove('form__input-active');
-                }
-            });
-
-            form.addEventListener('submit', function(event) {
-                event.preventDefault();
-                let isValid = true;
-
-                // Reset error messages
-                nameError.textContent = '';
-                emailError.textContent = '';
-                cvError.textContent = '';
-                messageError.textContent = '';
-
-                // Validate name
-                if (nameField.value.trim() === '') {
-                    nameError.textContent = 'Please enter your name.';
-                    isValid = false;
-                }
-
-                // Validate email
-                const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                if (!emailRegex.test(emailField.value.trim())) {
-                    emailError.textContent = 'Please enter a valid email address.';
-                    isValid = false;
-                }
-
-                // Validate CV file
-                const file = cvField.files[0];
-                if (!file) {
-                    cvError.textContent = 'Please upload your CV.';
-                    isValid = false;
-                } else if (file.size > maxFileSize) {
-                    cvError.textContent = 'File size must be less than 2 MB.';
-                    isValid = false;
-                }
-
-                // Validate message
-                if (messageField.value.trim() === '') {
-                    messageError.textContent = 'Please enter a message.';
-                    isValid = false;
-                }
-
-                // If everything is valid, show success message and reset form
-                if (isValid) {
-                    successMessage.style.display = 'block';
-                    form.reset();
-                    document.querySelector('.form__label-cv').textContent = 'Send CV'; // Reset label text
-                    document.querySelector('.form__label-cv').classList.remove('form__input-active'); // Reset active class
-                }
-            });
-
-            if(document.querySelectorAll('.btn')){
-                let btn = document.querySelectorAll('.btn')
-                btn.forEach(item => {
-                    item.addEventListener('click', ()=> {
-
-                        const modal1 = document.querySelector('.modal-form')
-                        modal1.classList.add('modalForm-visible')
-                    })
-
-                })
-            }
-
-
-        });
-
-    </script>
 
     <style>
-
         .out {
             display: grid;
             grid-template-columns: 1fr;
@@ -5789,132 +5580,6 @@
     <!-- End of headEnd -->
 
 
-    <style>
-          .modalForm-visible {
-            visibility: visible !important;
-          }
-        .modal-form {
-          position: fixed;
-          left: 0;
-          top: 0;
-          visibility: hidden;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 100%;
-          height: 100%;
-          z-index: 9999;
-          background: rgb(0 0 0 / 0.8);
-        }
-        .form {
-          --form-wiget-color-white: #fff;
-          --form-wiget-color-black: rgb(13 13 13);
-          --form-wiget-color-success: rgb(104 215 10);
-          --form-wiget-color-button: rgb(194 255 10);
-          --form-wiget-color-success-contrast: rgb(104 215 10);
-          --form-wiget-color-error: rgb(104 215 10);
-
-          --form-wiget-border-radius: 20px;
-
-          padding: 20px;
-          border-radius: var(--form-wiget-border-radius);
-          background: var(--form-wiget-color-white);
-        }
-        .form__wrap {
-          display: flex;
-          width: 100%;
-          min-width: 320px;
-          flex-direction: column;
-          gap: 20px;
-          position: relative;
-        }
-        .form__title {
-          font-size: 28px;
-          font-weight: 800;
-          text-align: center;
-        }
-        .form__success,  .form__error{
-          display: none;
-        }
-
-        .form__input, .form__textarea{
-          width: 100%;
-          border-radius: 20px;
-          padding: 4px 10px;
-          font-size: 14px;
-          font-weight: 500;
-          line-height: 21px;
-          border: 1px solid var(--form-input-border-color, var(--form-wiget-color-black));
-          outline: none;
-          min-height: 36px;
-          display: block;
-        }
-        .form__input:hover, .form__textarea:hover{
-          --form-input-border-color: var(--form-wiget-color-success);
-        }
-        .form__input:focus {
-          --form-input-border-color: var(--form-wiget-color-success);
-        }
-        .form__input-active {
-          --form-input-border-color: var(--form-wiget-color-success);
-        }
-        .form__input:focus +  .form__label, .form__input-active .form__label{
-          --form-label-top: 0;
-          font-size: 10px;
-          color: var(--form-wiget-color-success-contrast);
-        }
-        .form__input-row {
-          position: relative;
-        }
-        .form__label {
-          position: absolute;
-          left: 10px;
-          top: var(--form-label-top, 50%);
-          color: rgb(0 0 0 / 0.6);
-          padding: 3px;
-          background: #fff;
-          transform: translatey(-50%);
-          transition: top 0.5s, font-size 0.5s;
-          pointer-events: none;
-        }
-        .form__label-cv {
-          font-size: 14px;
-          line-height: 1.8;
-          color: rgb(0 0 0 / 0.6);
-        }
-        .form__input-cv-hide {
-          display: none;
-        }
-        .form__textarea {
-          resize: none;
-          width: 100%;
-          height: 100px;
-          border-radius: var(--form-wiget-border-radius);
-          padding: 10px 10px;
-        }
-        .form__button {
-          background-color: var(--form-wiget-color-button);
-          border: none;
-          outline: none;
-          font-size: 14px;
-          line-height: 1.8;
-          color:  var(--form-wiget-color-black);
-          border-radius: var(--form-wiget-border-radius);
-          min-height: 36px;
-          cursor: pointer;
-          transition: background-color 0.5s;
-
-        }
-        .form__button:hover {
-          background-color: var(--form-wiget-color-success-contrast);
-        }
-        .form__close {
-          cursor: pointer;
-          width: 20px;
-          position: absolute;
-          right: 0;
-        }
-    </style>
 </head>
 
 <body>
@@ -5924,8 +5589,25 @@
     <div class="modal-form">
         <form class="form" id="contactForm" novalidate>
             <div class="form__wrap">
-                <div class="form__close" >
-                    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+                <div class="form__close">
+                    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <style>
+                                .cls-1 {
+                                    fill: none;
+                                    stroke: #000;
+                                    stroke-linecap: round;
+                                    stroke-linejoin: round;
+                                    stroke-width: 2px;
+                                }
+                            </style>
+                        </defs>
+                        <title />
+                        <g id="cross">
+                            <line class="cls-1" x1="7" x2="25" y1="7" y2="25" />
+                            <line class="cls-1" x1="7" x2="25" y1="25" y2="7" />
+                        </g>
+                    </svg>
                 </div>
                 <h3 class="form__title">Registration</h3>
 
@@ -5951,14 +5633,25 @@
 
                 <div class="form__input-row">
 
-                    <textarea class="form__textarea" id="message" rows="5" required placeholder="Your Text Message"></textarea>
+                    <textarea class="form__textarea" id="message" rows="5" required
+                        placeholder="Your Text Message"></textarea>
                     <div class="error" id="messageError"></div>
                 </div>
                 <button class="form__button" type="submit">Submit</button>
                 <div class="form__success" id="successMessage">Success</div>
             </div>
 
-
+            <div class="form__wrap-seccses">
+                <h3 class="form__title">Готово</h3>
+                <p class="form__text">
+                    Ми отримали ваше резюме — дякуємо за інтерес до вакансії.
+                </p>
+                <p class="form__text">
+                    Наша команда перегляне його
+                    найближчим часом і звʼяжеться з вами.
+                </p>
+                <button class="form__button form__button-close">Назад до сайту</button>
+            </div>
         </form>
     </div>
 
@@ -6086,7 +5779,7 @@
                     </nav>
                 </div>
                 <div class="ssr-variant hidden-72rtr7">
-                    <nav class="framer-Ge726 framer-IOu2S framer-1dayfit framer-v-1xdzpt7"
+                    <nav class="framer-Ge726 framer-IOu2S framer-1dayfit framer-v-1xdzpt7 header"
                         data-framer-name="Phone - Closed" style="width:100%">
                         <div class="framer-4zuqgx" data-border="true"
                             style="--border-bottom-width:1px;--border-color:rgb(255, 255, 255);--border-left-width:1px;--border-right-width:1px;--border-style:solid;--border-top-width:1px;backdrop-filter:blur(10px);background-color:rgb(255, 255, 255);border-bottom-left-radius:100px;border-bottom-right-radius:100px;border-top-left-radius:100px;border-top-right-radius:100px;-webkit-backdrop-filter:blur(10px)">
@@ -6103,10 +5796,70 @@
                                         </div>
                                     </div>
                                 </a><!--/$-->
-                                <div class="framer-ou0v3u" data-highlight="true" tabindex="0">
-                                    <div data-framer-component-type="SVG"
+                                <div class="framer-ou0v3u burger" data-highlight="true" tabindex="0">
+                                    <div class="burger__icon" data-framer-component-type="SVG"
                                         style="image-rendering:pixelated;flex-shrink:0;background-size:100% 100%;background-image:url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; viewBox=&quot;0 0 30 21&quot; overflow=&quot;visible&quot;><path d=&quot;M 7.5 1.5 C 7.5 0.672 8.172 0 9 0 L 28.5 0 C 29.328 0 30 0.672 30 1.5 C 30 2.328 29.328 3 28.5 3 L 9 3 C 8.172 3 7.5 2.328 7.5 1.5 Z M 28.5 9 L 1.5 9 C 0.672 9 0 9.672 0 10.5 C 0 11.328 0.672 12 1.5 12 L 28.5 12 C 29.328 12 30 11.328 30 10.5 C 30 9.672 29.328 9 28.5 9 Z M 28.5 18 L 15 18 C 14.172 18 13.5 18.672 13.5 19.5 C 13.5 20.328 14.172 21 15 21 L 28.5 21 C 29.328 21 30 20.328 30 19.5 C 30 18.672 29.328 18 28.5 18 Z&quot; fill=&quot;rgb(0,0,0)&quot;></path></svg>')"
-                                        class="framer-109dz9h" aria-hidden="true"></div>
+                                        class="framer-109dz9h" aria-hidden="true">
+                                    </div>
+                                    <svg class="burger__icon-close" viewBox="0 0 32 32"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <defs>
+                                            <style>
+                                                .cls-1 {
+                                                    fill: none;
+                                                    stroke: #000;
+                                                    stroke-linecap: round;
+                                                    stroke-linejoin: round;
+                                                    stroke-width: 2px;
+                                                }
+                                            </style>
+                                        </defs>
+                                        <title />
+                                        <g id="cross">
+                                            <line class="cls-1" x1="7" x2="25" y1="7" y2="25" />
+                                            <line class="cls-1" x1="7" x2="25" y1="25" y2="7" />
+                                        </g>
+                                    </svg>
+                                    <div class="framer-vmmqnd burger__menu" data-framer-name="Content">
+                                        <div class="framer-ptniem" data-framer-name="Links">
+                                            <div class="framer-i6eucl" data-framer-name="Benefits"
+                                                style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;--extracted-r6o4lv:rgba(0, 0, 0, 0.8);transform:none"
+                                                data-framer-component-type="RichTextContainer">
+                                                <p style="--font-selector:R0Y7SW50ZXItcmVndWxhcg==;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-line-height:130%;--framer-text-color:var(--extracted-r6o4lv, rgba(0, 0, 0, 0.8))"
+                                                    class="framer-text"><!--$--><a
+                                                        class="framer-text framer-styles-preset-1wicq5s"
+                                                        data-styles-preset="ro7OPezbn"
+                                                        href="index.html#achivments">Ми</a><!--/$--></p>
+                                            </div>
+                                            <div class="framer-zp46j1" data-framer-name="Service"
+                                                style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;--extracted-r6o4lv:rgba(0, 0, 0, 0.8);transform:none"
+                                                data-framer-component-type="RichTextContainer">
+                                                <p style="--font-selector:R0Y7SW50ZXItcmVndWxhcg==;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-line-height:130%;--framer-text-color:var(--extracted-r6o4lv, rgba(0, 0, 0, 0.8))"
+                                                    class="framer-text"><!--$--><a
+                                                        class="framer-text framer-styles-preset-1wicq5s"
+                                                        data-styles-preset="ro7OPezbn"
+                                                        href="index.html#values">Цінності</a><!--/$--></p>
+                                            </div>
+                                            <div class="framer-1lvrzwc" data-framer-name="Testimonials"
+                                                style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;--extracted-r6o4lv:rgba(0, 0, 0, 0.8);transform:none"
+                                                data-framer-component-type="RichTextContainer">
+                                                <p style="--font-selector:R0Y7SW50ZXItcmVndWxhcg==;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-line-height:130%;--framer-text-color:var(--extracted-r6o4lv, rgba(0, 0, 0, 0.8))"
+                                                    class="framer-text"><!--$--><a
+                                                        class="framer-text framer-styles-preset-1wicq5s"
+                                                        data-styles-preset="ro7OPezbn"
+                                                        href="index.html#benefits">Бенефіти</a><!--/$--></p>
+                                            </div>
+                                            <div class="framer-1931i1c" data-framer-name="FAQs"
+                                                style="outline:none;display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;--extracted-r6o4lv:rgba(0, 0, 0, 0.8);transform:none"
+                                                data-framer-component-type="RichTextContainer">
+                                                <p style="--font-selector:R0Y7SW50ZXItcmVndWxhcg==;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-line-height:130%;--framer-text-color:var(--extracted-r6o4lv, rgba(0, 0, 0, 0.8))"
+                                                    class="framer-text"><!--$--><a
+                                                        class="framer-text framer-styles-preset-1wicq5s"
+                                                        data-styles-preset="ro7OPezbn"
+                                                        href="index.html#team">Команда</a><!--/$--></p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -6206,22 +5959,23 @@
                                     </div>
                                 </div>
                                 <div class="ssr-variant hidden-lh10ob">
-                                    <div class="framer-2iny96-container" id="2iny96"><!--$--><a
-                                            class="framer-gYn4Z framer-l01e1c framer-v-l01e1c framer-bej433"
+                                    <div class="btn framer-2iny96-container" id="2iny96"><!--$-->
+                                        <div class="framer-gYn4Z framer-l01e1c framer-v-l01e1c framer-bej433"
                                             data-border="true" data-framer-name="Variant 1" data-highlight="true"
                                             style="--border-bottom-width:1px;--border-color:rgb(0, 0, 0);--border-left-width:1px;--border-right-width:1px;--border-style:solid;--border-top-width:1px;background-color:rgb(194, 255, 10);border-bottom-left-radius:100px;border-bottom-right-radius:100px;border-top-left-radius:100px;border-top-right-radius:100px"
-                                            href="index.html" tabindex="0">
+                                            tabindex="0">
                                             <div class="framer-ouirzn" data-framer-name="Explore Careers"
                                                 style="outline:none;display:flex;flex-direction:column;justify-content:center;flex-shrink:0;--extracted-r6o4lv:rgb(13, 13, 13);--framer-paragraph-spacing:0px;transform:none"
                                                 data-framer-component-type="RichTextContainer">
                                                 <p style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:20px;--framer-font-weight:500;--framer-line-height:20.8px;--framer-text-color:var(--extracted-r6o4lv, rgb(13, 13, 13))"
                                                     class="framer-text">Відправити своє CV </p>
                                             </div>
-                                        </a><!--/$--></div>
+                                        </div><!--/$-->
+                                    </div>
                                 </div>
                                 <div class="ssr-variant hidden-72rtr7">
-                                    <div class="framer-2iny96-container" id="2iny96"><!--$--><div
-                                            class="btn framer-gYn4Z framer-l01e1c framer-v-rhwl58 framer-bej433"
+                                    <div class="framer-2iny96-container" id="2iny96"><!--$-->
+                                        <div class="btn framer-gYn4Z framer-l01e1c framer-v-rhwl58 framer-bej433"
                                             data-border="true" data-framer-name="Variant 2" data-highlight="true"
                                             style="--border-bottom-width:1px;--border-color:rgb(0, 0, 0);--border-left-width:1px;--border-right-width:1px;--border-style:solid;--border-top-width:1px;background-color:rgb(194, 255, 10);border-bottom-left-radius:100px;border-bottom-right-radius:100px;border-top-left-radius:100px;border-top-right-radius:100px;width:100%"
                                             tabindex="0">
@@ -6231,7 +5985,8 @@
                                                 <p style="--font-selector:SW50ZXItTWVkaXVt;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:20px;--framer-font-weight:500;--framer-line-height:20.8px;--framer-text-color:var(--extracted-r6o4lv, rgb(13, 13, 13))"
                                                     class="framer-text">Відправити своє CV </p>
                                             </div>
-                                        </div><!--/$--></div>
+                                        </div><!--/$-->
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -6365,7 +6120,7 @@
                                             <p style="--font-selector:SW50ZXItRXh0cmFCb2xk;--framer-font-family:&quot;Inter&quot;, &quot;Inter Placeholder&quot;, sans-serif;--framer-font-size:60px;--framer-font-weight:800;--framer-text-alignment:center"
                                                 class="framer-text">разом з нами?</p>
                                         </div>
-                                        <div class="framer-d5yppq-container"
+                                        <a class="framer-d5yppq-container" href="./vacation.html"
                                             style="will-change:transform;opacity:1;transform:none">
                                             <div class="framer-4lVKC framer-2p943k framer-v-2p943k"
                                                 data-framer-name="Variant 1"
@@ -6386,7 +6141,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

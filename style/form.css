@@ -1,0 +1,169 @@
+.modalForm-visible {
+  visibility: visible !important;
+}
+
+.modal-form {
+  position: fixed;
+  left: 0;
+  top: 0;
+  visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: rgb(0 0 0 / 0.8);
+}
+
+.form {
+  --form-wiget-color-white: #fff;
+  --form-wiget-color-black: rgb(13 13 13);
+  --form-wiget-color-success: rgb(104 215 10);
+  --form-wiget-color-button: rgb(194 255 10);
+  --form-wiget-color-success-contrast: rgb(104 215 10);
+  --form-wiget-color-error: rgb(104 215 10);
+
+  --form-wiget-border-radius: 20px;
+
+  padding: 20px;
+  border-radius: var(--form-wiget-border-radius);
+  background: var(--form-wiget-color-white);
+}
+
+.form__wrap {
+  display: flex;
+  width: 100%;
+  min-width: 320px;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+}
+
+.form__title {
+  font-size: 28px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.form__success,
+.form__error {
+  display: none;
+}
+
+.form__input,
+.form__textarea {
+  width: 100%;
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  border: 1px solid var(--form-input-border-color, var(--form-wiget-color-black));
+  outline: none;
+  min-height: 36px;
+  display: block;
+}
+
+.form__input:hover,
+.form__textarea:hover {
+  --form-input-border-color: var(--form-wiget-color-success);
+}
+
+.form__input:focus {
+  --form-input-border-color: var(--form-wiget-color-success);
+}
+
+.form__input-active {
+  --form-input-border-color: var(--form-wiget-color-success);
+}
+
+.form__input:focus+.form__label,
+.form__input-active .form__label {
+  --form-label-top: 0;
+  font-size: 10px;
+  color: var(--form-wiget-color-success-contrast);
+}
+
+.form__input-row {
+  position: relative;
+}
+
+.form__text {
+  text-align: center;
+  margin-bottom: 20px;
+  max-width: 280px;
+  margin: 20px auto 0;
+}
+
+.form__text:last-of-type {
+  margin-bottom: 30px;
+}
+
+.form__label {
+  position: absolute;
+  left: 10px;
+  top: var(--form-label-top, 50%);
+  color: rgb(0 0 0 / 0.6);
+  padding: 3px;
+  background: #fff;
+  transform: translatey(-50%);
+  transition: top 0.5s, font-size 0.5s;
+  pointer-events: none;
+}
+
+.form__label-cv {
+  font-size: 14px;
+  line-height: 1.8;
+  color: rgb(0 0 0 / 0.6);
+}
+
+.form__input-cv-hide {
+  display: none;
+}
+
+.form__textarea {
+  resize: none;
+  width: 100%;
+  height: 100px;
+  border-radius: var(--form-wiget-border-radius);
+  padding: 10px 10px;
+}
+
+.form__button {
+  background-color: var(--form-wiget-color-button);
+  border: none;
+  outline: none;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--form-wiget-color-black);
+  border-radius: var(--form-wiget-border-radius);
+  min-height: 36px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.5s;
+
+}
+
+.form__button:hover {
+  background-color: var(--form-wiget-color-success-contrast);
+}
+
+.form__close {
+  cursor: pointer;
+  width: 20px;
+  position: absolute;
+  right: 0;
+}
+
+.form__wrap-seccses {
+  display: none;
+}
+
+.form-hidden .form__wrap {
+  display: none;
+}
+
+.form-hidden .form__wrap-seccses {
+  display: block;
+}
