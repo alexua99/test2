@@ -34,7 +34,8 @@
   padding: 40px 20px;
 }
 
-.burger__icon {
+.burger__icon,
+.burger__icon-close {
   width: 30px;
   height: 30px;
 }
@@ -54,4 +55,29 @@
 
 .burger__visible .burger__icon {
   opacity: 0 !important;
+}
+
+.leng-switch {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-right: 20px;
+  margin-left: auto;
+}
+
+.leng-switch__flag {
+  opacity: 0.5;
+  transform: scale(0.9);
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.leng-switch__flag--active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.leng-switch__flag:hover {
+  opacity: 1;
+  transform: scale(1);
 }

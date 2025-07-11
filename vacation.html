@@ -37,11 +37,7 @@
 
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
     <meta name="robots" content="max-image-preview:large">
-    <link rel="canonical" href="https://honeyvideo.framer.website/">
-    <meta property="og:url" content="https://honeyvideo.framer.website/">
-    <link rel="alternate" href="https://honeyvideo.framer.website/" hreflang="uk">
-    <link rel="alternate" href="https://honeyvideo.framer.website/en/" hreflang="en">
-    <link rel="alternate" href="https://honeyvideo.framer.website/" hreflang="x-default">
+
 
     <link rel="stylesheet" href="./style/form.css">
     <link rel="stylesheet" href="./style/header.css">
@@ -49,6 +45,7 @@
     <script src="./js/form.js" defer></script>
     <script src="./js/vacantion-list.js" defer></script>
     <script src="./js/burger.js"></script>
+    <script src="./js/animation.js"></script>
 
     <style data-framer-breakpoint-css>
         @media(min-width: 1400px) {
@@ -5729,28 +5726,14 @@
                             </div>
                             <div class="framer-5nvj4v" data-framer-name="Button Container">
                                 <div class="framer-14wnwyl">
-                                    <div class="framer-1i5htog-container"><!--$-->
-                                        <div class="framer-locale-picker"><label for=":Ramnaqrbb8m:">Select
-                                                Language</label><select id=":Ramnaqrbb8m:" autocomplete="off">
-                                                <option value="default" selected>UKR</option>
-                                            </select>
-                                            <div class="input"
-                                                style="font-family:&quot;Inter&quot;, sans-serif;font-size:14px;font-style:normal;letter-spacing:0em;line-height:1.5em;--framer-background-color:rgb(238, 238, 238);--framer-color:rgb(0, 0, 0);padding:10px;border-radius:100px;border:none;--framer-focus-outline:1px solid var(--token-66833bbc-192e-49f9-8b52-191e23360a58, rgb(194, 255, 10));--framer-focus-outline-offset:0px;gap:5px">
-                                                <div class="icon"><svg xmlns="http://www.w3.org/2000/svg"
-                                                        viewBox="0 0 256 256" width="18" height="18"
-                                                        fill="rgb(0, 0, 0)">
-                                                        <path
-                                                            d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm87.63,96H175.8c-1.41-28.46-10.27-55.47-25.12-77A88.2,88.2,0,0,1,215.63,120ZM128,215.89c-18.73-20.27-30.09-49-31.77-79.89h63.54C158.09,166.87,146.73,195.62,128,215.89ZM96.23,120c1.68-30.87,13-59.62,31.77-79.89,18.73,20.27,30.09,49,31.77,79.89Zm9.09-77C90.47,64.53,81.61,91.54,80.2,120H40.37A88.2,88.2,0,0,1,105.32,43ZM40.37,136H80.2c1.41,28.46,10.27,55.47,25.12,77A88.2,88.2,0,0,1,40.37,136Zm110.31,77c14.85-21.56,23.71-48.57,25.12-77h39.83A88.2,88.2,0,0,1,150.68,213Z" />
-                                                    </svg></div>
-                                                <div class="title">UKR</div>
-                                                <div class="caret"><svg xmlns="http://www.w3.org/2000/svg"
-                                                        viewBox="0 0 12 12" width="12" height="12">
-                                                        <path d="M 2 4.5 L 6 8.5 L 10 4.5" fill="none"
-                                                            stroke="rgb(0, 0, 0)" stroke-width="1.5"
-                                                            stroke-linecap="round" stroke-linejoin="round" />
-                                                    </svg></div>
-                                            </div>
-                                        </div><!--/$-->
+
+                                    <div class="leng-switch">
+                                        <a href="./vacation.html" class="leng-switch__flag leng-switch__flag--active">
+                                            <img src="./ukraine.png" alt="ua" width="40" height="40">
+                                        </a>
+                                        <a href="./vacation-en.html" class="leng-switch__flag">
+                                            <img src="./united-kingdom.png" alt="ua" width="40" height="40">
+                                        </a>
                                     </div>
                                     <div class="framer-sy7f7x-container"><!--$--><a
                                             class="framer-ledrm framer-1xml63p framer-v-17e07m6 framer-6lct2q"
@@ -5796,6 +5779,15 @@
                                         </div>
                                     </div>
                                 </a><!--/$-->
+                                <div class="leng-switch">
+                                    <a href="./vacation.html" class="leng-switch__flag leng-switch__flag--active">
+                                        <img src="./ukraine.png" alt="ua" width="40" height="40">
+                                    </a>
+                                    <a href="./vacation-en.html" class="leng-switch__flag">
+                                        <img src="./united-kingdom.png" alt="ua" width="40" height="40">
+                                    </a>
+                                </div>
+
                                 <div class="framer-ou0v3u burger" data-highlight="true" tabindex="0">
                                     <div class="burger__icon" data-framer-component-type="SVG"
                                         style="image-rendering:pixelated;flex-shrink:0;background-size:100% 100%;background-image:url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; viewBox=&quot;0 0 30 21&quot; overflow=&quot;visible&quot;><path d=&quot;M 7.5 1.5 C 7.5 0.672 8.172 0 9 0 L 28.5 0 C 29.328 0 30 0.672 30 1.5 C 30 2.328 29.328 3 28.5 3 L 9 3 C 8.172 3 7.5 2.328 7.5 1.5 Z M 28.5 9 L 1.5 9 C 0.672 9 0 9.672 0 10.5 C 0 11.328 0.672 12 1.5 12 L 28.5 12 C 29.328 12 30 11.328 30 10.5 C 30 9.672 29.328 9 28.5 9 Z M 28.5 18 L 15 18 C 14.172 18 13.5 18.672 13.5 19.5 C 13.5 20.328 14.172 21 15 21 L 28.5 21 C 29.328 21 30 20.328 30 19.5 C 30 18.672 29.328 18 28.5 18 Z&quot; fill=&quot;rgb(0,0,0)&quot;></path></svg>')"
