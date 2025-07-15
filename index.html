@@ -6276,8 +6276,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="framer-7upl5v  animate__animated animate__animated-left  animate__delay-1s "
-                                data-border="true" data-framer-name="Frame 56" style="">
+                            <div class="framer-7upl5v  animate__animated animate__animated-left   " data-border="true"
+                                data-framer-name="Frame 56" style="">
                                 <div class="framer-1erupih" data-framer-name="Frame 53">
                                     <div class="framer-1wzs5yo" data-framer-name="Frame 36">
                                         <div class="ssr-variant hidden-lh10ob">
@@ -6448,8 +6448,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="framer-fuo7wf    animate__animated animate__animated-right animate__delay-1s "
-                                data-border="true" data-framer-name="Frame 57" style="">
+                            <div class="framer-fuo7wf    animate__animated animate__animated-right  " data-border="true"
+                                data-framer-name="Frame 57" style="">
                                 <div class="framer-17ygu5a" data-framer-name="Frame 53">
                                     <div class="framer-1rqn5yl" data-framer-name="Frame 36">
                                         <div class="ssr-variant hidden-lh10ob">
@@ -6871,7 +6871,7 @@
                                 </a><!--/$--></div>
                         </div>
                         <div class="ssr-variant hidden-lh10ob">
-                            <div class="framer-svl1c9-container   animate__animated animate__animated-left animate__delay-1s  "
+                            <div class="framer-svl1c9-container   animate__animated animate__animated-left   "
                                 data-framer-cursor="39r9fu"><!--$--><a
                                     class="framer-hCHb9 framer-3fqt0s framer-v-3fqt0s framer-oa4qo" data-border="true"
                                     data-framer-name="Variant 1"
@@ -7106,7 +7106,7 @@
                                 </a><!--/$--></div>
                         </div>
                         <div class="ssr-variant hidden-lh10ob">
-                            <div class="framer-1dzl4bw-container   animate__animated-right animate__delay-1s  "
+                            <div class="framer-1dzl4bw-container   animate__animated-right   "
                                 data-framer-cursor="39r9fu"><!--$--><a
                                     class="framer-hCHb9 framer-3fqt0s framer-v-3fqt0s framer-oa4qo" data-border="true"
                                     data-framer-name="Variant 1"
@@ -8277,6 +8277,14 @@
                             <div class="framer-1hwxvtg-container" style="height: auto"><!--$-->
 
                                 <style>
+                                    :root {
+                                        --swiper-pagination-bottom: -48px;
+                                    }
+
+                                    .swiper {
+                                        padding: 0 30px;
+                                    }
+
                                     .swiper-slide img {
                                         width: 100%;
                                         height: auto;
@@ -8345,10 +8353,26 @@
                                             <div class="swiper-slide">
                                                 <img src="./honey_team/7.png" alt="img">
                                             </div>
+                                            <div class="swiper-slide">
+                                                <img src="./honey_team/8.png" alt="img">
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <img src="./honey_team/9.png" alt="img">
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <img src="./honey_team/10.png" alt="img">
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <img src="./honey_team/11.png" alt="img">
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <img src="./honey_team/12.png" alt="img">
+                                            </div>
                                         </div>
-                                        <div class="swiper-button-next"></div>
-                                        <div class="swiper-button-prev"></div>
+
                                     </div>
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
                                     <div class="swiper-pagination"></div>
                                 </section>
 
@@ -8371,6 +8395,14 @@
                                             nextEl: ".swiper-button-next",
                                             prevEl: ".swiper-button-prev",
                                         },
+                                        breakpoints: {
+                                            // when window width is <= 768px
+                                            768: {
+                                                slidesPerView: 2,
+                                                spaceBetween: 30,
+                                            }
+
+                                        }
                                     });
                                 </script>
                             </div>
